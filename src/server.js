@@ -1,25 +1,33 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 import mongoose from 'mongoose';
+import Config from './config';
 import UserRoutes from './routes/user.routes';
+import CourseRoutes from './routes/course.routes';
+import EnrollmentRoutes from './routes/enrollment.routes';
+import AuthRoutes from './routes/auth.routes';
 
-const MONGO_USER = 'roberto';
-const MONGO_PASS = 'isaacberry';
-const MONGO_ROUTE = 'ds151348.mlab.com:51348/edplayground';
-const MONGO_URL = `mongodb://${ MONGO_USER }:${ MONGO_PASS }@${ MONGO_ROUTE }`;
-mongoose.connect(MONGO_URL).then(() => console.log('Connected to Database: ' + MONGO_ROUTE));
+const dbconnection = `mongodb://${ Config.database.user }:${ Config.database.password }@${ Config.database.url }`;
 mongoose.Promise = Promise;
+mongoose.connect(dbconnection)
+  .then(() => console.log('Connected to Database: ' + Config.database.url ));
 
 const port = process.env.PORT || 8080;
 
 let app = express();
+app.set('secret', Config.secret);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 
 let router = express.Router();
 router.get('/', (req, res) => res.status(200).send('Api Running...'));
 
-UserRoutes(router);
+UserRoutes(app, router);
+CourseRoutes(router);
+EnrollmentRoutes(router);
+AuthRoutes(app, router);
 
 app.use('/api', router);
 

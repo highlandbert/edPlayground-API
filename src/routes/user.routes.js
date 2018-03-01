@@ -1,6 +1,8 @@
+import bcrypt from 'bcrypt';
 import User from '../models/user.model';
+import { JwtAuth } from '../middlewares';
 
-let UserRoutes = router => {
+let UserRoutes = (app, router) => {
 
   router.route('/users')
 
@@ -9,30 +11,30 @@ let UserRoutes = router => {
     */
     .post((req, res) => {
 
-      if (!req.body.name || !req.body.mail || !req.body.birth) {
-        res.status(400).send();
-        return;
+      let user = new User();
+
+      if (req.body.password !== undefined) {
+        user.password = bcrypt.hashSync(req.body.password, 10);
       }
 
-      let user = new User();
+      user.username = req.body.username;
       user.name = req.body.name;
       user.surname = req.body.surname;
       user.mail = req.body.mail;
       user.birth = req.body.birth;
-      user.since = Date.now();
 
       user.save()
         .then(() => res.json({ done: true }))
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(400).send(err));
     })
 
     /*
       GET api/users
     */
-    .get((req, res) =>
+    .get(JwtAuth(app), (req, res) =>
       User.find()
         .then(users => res.json(users))
-        .catch(err => res.status(500).send(err))
+        .catch(err => res.status(404).send(err))
     );
 
 
@@ -44,7 +46,7 @@ let UserRoutes = router => {
     .get((req, res) =>
       User.findById(req.params.id)
         .then(user => res.json(user))
-        .catch(err => res.status(500).send(err))
+        .catch(err => res.status(404).send(err))
     )
 
     /*
@@ -62,7 +64,7 @@ let UserRoutes = router => {
         })
         .then(user => user.save())
         .then(() => res.json({ done: true }))
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(400).send(err));
     })
 
     /*
@@ -71,7 +73,7 @@ let UserRoutes = router => {
     .delete((req, res) =>
       User.remove({ _id: req.params.id })
         .then(() => res.json({ done: true }))
-        .catch(err => res.status(500).send(err))
+        .catch(err => res.status(404).send(err))
     );
 };
 
