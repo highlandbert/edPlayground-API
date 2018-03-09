@@ -11,6 +11,7 @@ import AuthRoutes from './routes/auth.routes';
 import LessonRoutes from './routes/lesson.routes';
 import LevelRoutes from './routes/level.routes';
 import SupplementRoutes from './routes/supplement.routes';
+import LessonResultsRoutes from './routes/lesson-results.routes';
 
 const dbconnection = `mongodb://${ Config.database.user }:${ Config.database.password }@${ Config.database.url }`;
 mongoose.Promise = Promise;
@@ -36,6 +37,7 @@ EnrollmentRoutes(app, router);
 LessonRoutes(app, router);
 LevelRoutes(app, router);
 SupplementRoutes(app, router);
+LessonResultsRoutes(app, router);
 AuthRoutes(app, router);
 
 app.use('/api', router);
