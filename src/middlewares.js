@@ -2,6 +2,11 @@ import jwt from 'jsonwebtoken';
 
 export const JwtAuth = (app) => (req, res, next) => {
 
+  if (!app.get('authenticate')) {
+    next();
+    return;
+  }
+
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
   if (!token) {

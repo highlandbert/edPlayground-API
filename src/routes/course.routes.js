@@ -1,13 +1,14 @@
 import Course from '../models/course.model';
+import { JwtAuth } from '../middlewares';
 
-let CourseRoutes = router => {
+let CourseRoutes = (app, router) => {
 
   router.route('/courses')
 
     /*
       POST api/courses { course }
     */
-    .post((req, res) => {
+    .post(JwtAuth(app), (req, res) => {
       let course = new Course();
       course.name = req.body.name;
 
@@ -19,7 +20,7 @@ let CourseRoutes = router => {
     /*
       GET api/courses
     */
-    .get((req, res) =>
+    .get(JwtAuth(app), (req, res) =>
       Course.find()
         .then(courses => res.json(courses))
         .catch(err => res.status(404).send(err))
@@ -31,7 +32,7 @@ let CourseRoutes = router => {
     /*
       GET /api/courses/id
     */
-    .get((req, res) =>
+    .get(JwtAuth(app), (req, res) =>
       Course.findById(req.params.id)
         .then(course => res.json(course))
         .catch(err => res.status(404).send(err))
@@ -40,7 +41,7 @@ let CourseRoutes = router => {
     /*
       PUT /api/courses/id { course }
     */
-    .put((req, res) => {
+    .put(JwtAuth(app), (req, res) => {
       Course.findById(req.params.id)
         .then(course => {
           course.name = req.body.name || course.name;
@@ -54,7 +55,7 @@ let CourseRoutes = router => {
     /*
       DELETE /api/courses/id
     */
-    .delete((req, res) =>
+    .delete(JwtAuth(app), (req, res) =>
       Course.remove({ _id: req.params.id })
         .then(() => res.json({ done: true }))
         .catch(err => res.status(404).send(err))

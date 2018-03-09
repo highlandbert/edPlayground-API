@@ -9,7 +9,7 @@ let UserRoutes = (app, router) => {
     /*
       POST api/users { user }
     */
-    .post((req, res) => {
+    .post(JwtAuth(app), (req, res) => {
 
       let user = new User();
 
@@ -43,7 +43,7 @@ let UserRoutes = (app, router) => {
     /*
       GET /api/users/id
     */
-    .get((req, res) =>
+    .get(JwtAuth(app), (req, res) =>
       User.findById(req.params.id)
         .then(user => res.json(user))
         .catch(err => res.status(404).send(err))
@@ -52,7 +52,7 @@ let UserRoutes = (app, router) => {
     /*
       PUT /api/users/id { user }
     */
-    .put((req, res) => {
+    .put(JwtAuth(app), (req, res) => {
       User.findById(req.params.id)
         .then(user => {
           user.name = req.body.name || user.name;
@@ -70,7 +70,7 @@ let UserRoutes = (app, router) => {
     /*
       DELETE /api/users/id
     */
-    .delete((req, res) =>
+    .delete(JwtAuth(app), (req, res) =>
       User.remove({ _id: req.params.id })
         .then(() => res.json({ done: true }))
         .catch(err => res.status(404).send(err))
