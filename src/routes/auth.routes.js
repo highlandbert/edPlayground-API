@@ -19,9 +19,9 @@ let AuthRoutes = (app, router) => {
       })
       .then(user => {
         if (!user) throw 'username';
-        return bcrypt.compare(req.body.password, user.password);
+        return [user, bcrypt.compare(req.body.password, user.password)];
       })
-      .then(result => {
+      .then(([user, result]) => {
         if (!result) throw 'password';
 
         const payload = { username: req.body.username };
@@ -29,7 +29,11 @@ let AuthRoutes = (app, router) => {
           expiresIn: '1440m' // 24h
         });
 
-        res.json({ token: token });
+        res.json({
+          token: token,
+          username: user.username,
+          _id: user._id
+        });
       })
       .catch(err => res.status(500).send(err));
     });

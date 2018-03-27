@@ -11,6 +11,7 @@ let CourseRoutes = (app, router) => {
     .post(JwtAuth(app), (req, res) => {
       let course = new Course();
       course.name = req.body.name;
+      course.description = req.body.description;
 
       course.save()
         .then(() => res.json({ done: true }))
@@ -45,6 +46,7 @@ let CourseRoutes = (app, router) => {
       Course.findById(req.params.id)
         .then(course => {
           course.name = req.body.name || course.name;
+          course.description = req.body.description || course.description;
           return course;
         })
         .then(course => course.save())

@@ -22,7 +22,7 @@ const port = process.env.PORT || 8080;
 
 let app = express();
 app.set('secret', Config.secret);
-app.set('authenticate', false);
+app.set('authenticate', true);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(expressSanitizer());
