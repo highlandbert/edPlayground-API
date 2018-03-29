@@ -11,7 +11,7 @@ import AuthRoutes from './routes/auth.routes';
 import LessonRoutes from './routes/lesson.routes';
 import LevelRoutes from './routes/level.routes';
 import SupplementRoutes from './routes/supplement.routes';
-import LessonResultsRoutes from './routes/lesson-results.routes';
+import LevelResultsRoutes from './routes/level-results.routes';
 
 const dbconnection = `mongodb://${ Config.database.user }:${ Config.database.password }@${ Config.database.url }`;
 mongoose.Promise = Promise;
@@ -22,7 +22,7 @@ const port = process.env.PORT || 8080;
 
 let app = express();
 app.set('secret', Config.secret);
-app.set('authenticate', true);
+app.set('authenticate', false);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(expressSanitizer());
@@ -37,7 +37,7 @@ EnrollmentRoutes(app, router);
 LessonRoutes(app, router);
 LevelRoutes(app, router);
 SupplementRoutes(app, router);
-LessonResultsRoutes(app, router);
+LevelResultsRoutes(app, router);
 AuthRoutes(app, router);
 
 app.use(function(req, res, next) {
