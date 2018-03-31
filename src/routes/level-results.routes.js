@@ -1,5 +1,6 @@
 import LevelResults from '../models/level-results.model';
 import { JwtAuth } from '../middlewares';
+import { Level } from '../../../learn/src/data/model';
 
 let LevelResultsRoutes = (app, router) => {
 
@@ -39,6 +40,7 @@ let LevelResultsRoutes = (app, router) => {
         level: req.params.levelId,
         user: req.params.userId
       })
+      .populate('level', 'order')
       .then(levelResults => res.json(levelResults))
       .catch(err => res.status(404).send(err))
     )

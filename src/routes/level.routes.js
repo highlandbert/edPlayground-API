@@ -26,7 +26,7 @@ let LevelRoutes = (app, router) => {
     */
     .get(JwtAuth(app), (req, res) =>
       Level.find({ lesson: req.params.id })
-        .then(level => res.json(level))
+        .then(levels => res.json(levels))
         .catch(err => res.status(404).send(err))
     )
 
