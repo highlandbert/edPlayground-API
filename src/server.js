@@ -12,6 +12,9 @@ import LessonRoutes from './routes/lesson.routes';
 import LevelRoutes from './routes/level.routes';
 import SupplementRoutes from './routes/supplement.routes';
 import LevelResultsRoutes from './routes/level-results.routes';
+import QuestionRoutes from './routes/question.routes';
+import AnswerRoutes from './routes/answer.routes';
+import GoldRoutes from './routes/gold.routes';
 
 const dbconnection = `mongodb://${ Config.database.user }:${ Config.database.password }@${ Config.database.url }`;
 mongoose.Promise = Promise;
@@ -38,6 +41,9 @@ LessonRoutes(app, router);
 LevelRoutes(app, router);
 SupplementRoutes(app, router);
 LevelResultsRoutes(app, router);
+QuestionRoutes(app, router);
+AnswerRoutes(app, router);
+GoldRoutes(app, router);
 AuthRoutes(app, router);
 
 app.use(function(req, res, next) {
