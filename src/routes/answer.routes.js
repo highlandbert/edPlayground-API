@@ -26,6 +26,7 @@ let AnswerRoutes = (app, router) => {
     */
     .get(JwtAuth(app), (req, res) =>
       Answer.find({ question: req.params.questionId })
+        .populate('user')
         .then(answer => res.json(answer))
         .catch(err => res.status(404).send(err))
     );

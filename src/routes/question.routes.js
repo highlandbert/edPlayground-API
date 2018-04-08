@@ -10,6 +10,7 @@ let QuestionRoutes = (app, router) => {
     */
     .post(JwtAuth(app), (req, res) => {
       let question = new Question();
+      question.title = req.body.title;
       question.content = req.body.content;
       question.user = req.body.userId;
       question.course = req.body.courseId;
@@ -26,6 +27,8 @@ let QuestionRoutes = (app, router) => {
     */
     .get(JwtAuth(app), (req, res) =>
       Question.find({ course: req.params.courseId })
+        .populate('user')
+        .sort({ 'created': 'desc' })
         .then(questions => res.json(questions))
         .catch(err => res.status(404).send(err))
     );
@@ -38,6 +41,7 @@ let QuestionRoutes = (app, router) => {
     */
     .get(JwtAuth(app), (req, res) =>
       Question.findById(req.params.id)
+        .populate('user')
         .then(question => res.json(question))
         .catch(err => res.status(404).send(err))
     )
@@ -48,6 +52,7 @@ let QuestionRoutes = (app, router) => {
     .put(JwtAuth(app), (req, res) => {
       Question.findById(req.params.id)
         .then(question => {
+          question.title = req.body.title || question.title;
           question.content = req.body.content || question.content;
           return question;
         })
