@@ -12,20 +12,20 @@ let QuestionRoutes = (app, router) => {
       let question = new Question();
       question.content = req.body.content;
       question.user = req.body.userId;
-      question.level = req.body.levelId;
+      question.course = req.body.courseId;
 
       question.save()
         .then(() => res.json({ done: true }))
         .catch(err => res.status(400).send(err));
     });
 
-  router.route('/questions/level/:levelId')
+  router.route('/questions/course/:courseId')
 
     /*
       GET api/questions
     */
     .get(JwtAuth(app), (req, res) =>
-      Question.find({ level: req.params.levelId })
+      Question.find({ course: req.params.courseId })
         .then(questions => res.json(questions))
         .catch(err => res.status(404).send(err))
     );
