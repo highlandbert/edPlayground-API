@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
-let GoldSchema = new mongoose.Schema({
+let PlatinumSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  answer: { type: mongoose.Schema.Types.ObjectId, ref: 'Answer', required: true }
+  question: { type: mongoose.Schema.Types.ObjectId, ref: 'Question', required: true }
 });
 
-let Gold = mongoose.model('Gold', GoldSchema);
+let Platinum = mongoose.model('Platinum', PlatinumSchema);
 
-export default Gold;
+export default Platinum;

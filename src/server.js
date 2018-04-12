@@ -15,6 +15,7 @@ import LevelResultsRoutes from './routes/level-results.routes';
 import QuestionRoutes from './routes/question.routes';
 import AnswerRoutes from './routes/answer.routes';
 import GoldRoutes from './routes/gold.routes';
+import PlatinumRoutes from './routes/platinum.routes';
 
 const dbconnection = `mongodb://${ Config.database.user }:${ Config.database.password }@${ Config.database.url }`;
 mongoose.Promise = Promise;
@@ -44,10 +45,12 @@ LevelResultsRoutes(app, router);
 QuestionRoutes(app, router);
 AnswerRoutes(app, router);
 GoldRoutes(app, router);
+PlatinumRoutes(app, router);
 AuthRoutes(app, router);
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, x-access-token, X-Requested-With, Content-Type, Accept');
   next();
 });
