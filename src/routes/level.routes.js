@@ -19,14 +19,25 @@ let LevelRoutes = (app, router) => {
         .catch(err => res.status(400).send(err));
     });
 
-  router.route('/levels/:id')
+  router.route('/levels/lesson/:id')
 
     /*
-      GET /api/levels/lessonId
+    GET /api/levels/lesson/lessonId
     */
     .get(JwtAuth(app), (req, res) =>
       Level.find({ lesson: req.params.id })
         .then(levels => res.json(levels))
+        .catch(err => res.status(404).send(err))
+    );
+
+  router.route('/levels/:id')
+
+    /*
+      GET /api/levels/levelId
+    */
+    .get(JwtAuth(app), (req, res) =>
+      Level.findById(req.params.id)
+        .then(level => res.json(level))
         .catch(err => res.status(404).send(err))
     )
 
