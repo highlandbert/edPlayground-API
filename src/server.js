@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import expressSanitizer from 'express-sanitizer';
@@ -47,6 +48,8 @@ AnswerRoutes(app, router);
 GoldRoutes(app, router);
 PlatinumRoutes(app, router);
 AuthRoutes(app, router);
+
+app.use('/scripts', express.static(path.join(__dirname, 'levels'), { extensions: [ 'js' ]}));
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
