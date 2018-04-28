@@ -42931,7 +42931,7 @@ const element = (app) => ({
 /*!***************************!*\
   !*** ./src/playground.js ***!
   \***************************/
-/*! exports provided: app, addBehaviour, element, circle, rectangle */
+/*! exports provided: app, addBehaviour, element, circle, rectangle, events, finishLevel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42939,6 +42939,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "app", function() { return app; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBehaviour", function() { return addBehaviour; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "element", function() { return element; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "events", function() { return events; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "finishLevel", function() { return finishLevel; });
 /* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/lib/index.js");
 /* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(pixi_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./element */ "./src/element.js");
@@ -42953,7 +42955,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const app = new pixi_js__WEBPACK_IMPORTED_MODULE_0__["Application"](1280, 720, { 
+const app = new pixi_js__WEBPACK_IMPORTED_MODULE_0__["Application"](1280, 720, {
   antialias: true,
   backgroundColor: 0xffffff
 });
@@ -42967,6 +42969,14 @@ document.getElementById('level').appendChild(app.view);
 const addBehaviour = (fun) => {
   app.ticker.add(delta => fun(delta));
 };
+
+const events = {
+  onLevelFinished: () => {}
+}
+
+const finishLevel = () => {
+  events.onLevelFinished();
+}
 
 
 
