@@ -12,6 +12,7 @@ let LevelRoutes = (app, router) => {
       let level = new Level();
       level.name = req.body.name;
       level.order = req.body.order;
+      level.hasScores = req.body.hasScores;
       level.lesson = req.body.lessonId;
 
       level.save()
@@ -49,6 +50,7 @@ let LevelRoutes = (app, router) => {
         .then(level => {
           level.name = req.body.name || level.name;
           level.order = req.body.order || level.order;
+          level.hasScores = req.body.hasScores || level.hasScores;
           return level;
         })
         .then(level => level.save())

@@ -49,7 +49,7 @@ GoldRoutes(app, router);
 PlatinumRoutes(app, router);
 AuthRoutes(app, router);
 
-app.use('/scripts', express.static(path.join(__dirname, 'levels'), { extensions: [ 'js' ]}));
+app.use('/cdn', express.static(path.join(__dirname, 'cdn'), { extensions: [ 'js' ]}));
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
