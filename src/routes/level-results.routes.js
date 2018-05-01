@@ -1,6 +1,5 @@
 import LevelResults from '../models/level-results.model';
 import { JwtAuth } from '../middlewares';
-import { Level } from '../../../learn/src/data/model';
 
 let LevelResultsRoutes = (app, router) => {
 
@@ -60,7 +59,7 @@ let LevelResultsRoutes = (app, router) => {
       .then(levelResults => levelResults.save())
       .then(() => res.json({ done: true }))
       .catch(err => res.status(400).send(err));
-    })
+    });
 };
 
 export default LevelResultsRoutes;
