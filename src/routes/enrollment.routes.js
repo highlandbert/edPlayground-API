@@ -13,9 +13,18 @@ let EnrollmentRoutes = (app, router) => {
       enrollment.user = req.params.userId;
       enrollment.course = req.body.courseId;
 
-      enrollment.save()
-        .then(() => res.json({ done: true }))
-        .catch(err => res.status(400).send(err));
+      Enrollment.find({
+        user: req.params.userId,
+        course: req.body.courseId
+      }).then(existing => {
+        if (existing.length > 0) {
+          return true;
+        } else {
+          return enrollment.save();
+        }
+      })
+      .then(() => res.json({ done: true }))
+      .catch(err => res.status(400).send(err));
     })
 
     /*
