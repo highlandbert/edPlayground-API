@@ -9,7 +9,7 @@ let UserRoutes = (app, router) => {
     /*
       POST api/users { user }
     */
-    .post(JwtAuth(app), (req, res) => {
+    .post((req, res) => {
 
       let user = new User();
 
