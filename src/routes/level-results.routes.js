@@ -8,13 +8,11 @@ let LevelResultsRoutes = (app, router) => {
     /*
       POST api/levelsResults { levelResults }
     */
-    .post(JwtAuth(app), (req, res) => {
-      let levelResults = new LevelResults();
-      levelResults.seconds = req.body.seconds;
-      levelResults.level = req.body.levelId;
-      levelResults.user = req.body.userId;
-
-      levelResults.save()
+    .post((req, res) => {
+      LevelResults.updateOne(
+          { level: req.body.levelId, user: req.body.userId },
+          { seconds: req.body.seconds },
+          { upsert: true })
         .then(() => res.json({ done: true }))
         .catch(err => res.status(400).send(err));
     });
