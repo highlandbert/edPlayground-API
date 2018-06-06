@@ -19,10 +19,11 @@ let LevelResultsRoutes = (app, router) => {
         .catch(err => res.status(400).send(err));
     });
 
-  router.route('/levelsResults/ranking/:seconds')
+  router.route('/levelsResults/ranking/:seconds/level/:levelId')
 
     .get(JwtAuth(app), (req, res) =>
       LevelResults.count({
+        level: req.params.levelId,
         seconds: { $lt: req.params.seconds }
       })
       .then(count => res.json(count + 1))
